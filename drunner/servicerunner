@@ -138,11 +138,12 @@ function main {
             
             # Copy out project files
             docker run --rm -it --user="$(id -u):$(id -g)" -v "${PROJECT_PATH}:/tempcopy" "${IMAGENAME}" /bin/bash -c "cp -r /project/* /tempcopy/"
-            
-            chownpath "${PROJECT_PATH}" "chown -R $EUID:${GROUPS[0]} /s && chmod -R 0700 /s"
 
             # Replace <<PROJECT_NAME>> with $PROJECT_NAME
             grep -rl "<<PROJECT_NAME>>" ${PROJECT_PATH} | xargs sed -i "s/<<PROJECT_NAME>>/${PROJECT_NAME}/g"
+            
+            # Set permissions on new files
+            chownpath "${PROJECT_PATH}" "chown -R $EUID:${GROUPS[0]} /s && chmod -R 0644 /s"
 
            ;;
             
