@@ -137,7 +137,7 @@ function main {
             chmod 0777 "${PROJECT_PATH}"
             
             # Copy out project files
-            docker run --rm -it -v "${PROJECT_PATH}:/tempcopy" "${IMAGENAME}" /bin/bash -c "cp -r /project/* /tempcopy/"
+            docker run --rm -it --user="$(id -u):$(id -g)" -v "${PROJECT_PATH}:/tempcopy" "${IMAGENAME}" /bin/bash -c "cp -r /project/* /tempcopy/"
             
             chownpath "${PROJECT_PATH}" "chown -R $EUID:${GROUPS[0]} /s && chmod -R 0700 /s"
 
