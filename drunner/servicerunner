@@ -128,7 +128,7 @@ function main {
             
          create)
             local PROJECT_NAME=$2
-            local PROJECT_PATH=$3
+            local PROJECT_PATH=$(realpath $3)
             
             # Create project directory
             mkdir -p ${PROJECT_PATH}
