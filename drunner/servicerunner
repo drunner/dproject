@@ -137,7 +137,7 @@ function main {
             chmod 0777 "${PROJECT_PATH}"
             
             # Copy out project files
-            docker run --rm -it --user="$(id -u):$(id -g)" -v "${PROJECT_PATH}:/tempcopy" "${IMAGENAME}" /bin/bash -c "cp -r /project/* /tempcopy/"
+            docker run --rm -it --user="$(id -u):$(id -g)" -v "${PROJECT_PATH}:/tempcopy" "${IMAGENAME}" /bin/bash -c "cp -r /project/. /tempcopy/"
 
             # Replace <<PROJECT_NAME>> with $PROJECT_NAME
             grep -rl "<<PROJECT_NAME>>" ${PROJECT_PATH} | xargs sed -i "s/<<PROJECT_NAME>>/${PROJECT_NAME}/g"
