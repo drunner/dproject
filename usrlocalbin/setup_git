@@ -1,0 +1,6 @@
+#!/bin/bash
+[ -e "/config/vars.sh" ] || die "Please run \"setup configure\" first"
+
+source /config/vars.sh
+echo "git config --global user.name \"${fullName}\""
+echo "git config --global user.email ${email}"
