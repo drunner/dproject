@@ -7,5 +7,7 @@ COPY ["./drunner","/drunner"]
 COPY ["./project","/project"]
 RUN chmod a-w -R /drunner
 
+COPY ["usrlocalbin", "/usr/local/bin"]
+RUN chmod a+x /usr/local/bin/*
 # lock in druser.
 USER druser

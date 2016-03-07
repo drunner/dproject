@@ -1,0 +1,40 @@
+#!/bin/bash
+# fullName=''
+# email=''
+# ip_address=''
+# share_path=''
+# domainUserName=''
+
+if [ -e /config/vars.sh ]; then
+   source /config/vars.sh
+else
+   touch /config/vars.sh
+fi
+
+echo "Enter your full name: (${fullName:-})"
+read -e i_fullName
+
+echo "Enter your email: (${email:-})"
+read -e i_email
+
+echo "Enter your host computer IP address: (${ip_address:-})"
+read -e i_ip_address
+
+echo "Enter your shared folder path: (${share_path:-})"
+read -e i_share_path
+
+echo "Enter your domain username: (${domainUserName:-})"
+read -e i_domainUserName
+
+if [ ! -z "$i_fullName" ]; then fullName=$i_fullName; fi
+if [ ! -z "$i_email" ]; then email=$i_email; fi
+if [ ! -z "$i_ip_address" ]; then ip_address=$i_ip_address; fi
+if [ ! -z "$i_share_path" ]; then share_path=$i_share_path; fi
+if [ ! -z "$i_domainUserName" ]; then domainUserName=$i_domainUserName; fi
+
+echo "#!/bin/bash" > /config/vars.sh
+echo "fullName=\"${fullName}\"" >> /config/vars.sh
+echo "email=\"${email}\"" >> /config/vars.sh
+echo "ip_address=\"${ip_address}\"" >> /config/vars.sh
+echo "share_path=\"${share_path}\"" >> /config/vars.sh
+echo "domainUserName=\"${domainUserName}\"" >> /config/vars.sh

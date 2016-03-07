@@ -44,6 +44,7 @@ EOF
 
 #------------------------------------------------------------------------------------
 # Run a command in a temporary container. 
+# Add "${DOCKEROPTS[@]}" after "${HOSTNAME}" if you are using servicecfg.sh
 
 function dockerrun {
    local RVAL=0
@@ -51,6 +52,38 @@ function dockerrun {
    RVAL=$?
    docker rm "${SERVICENAME}-${COMMAND}" >/dev/null
    [ $RVAL -eq 0 ] || die "${SERVICENAME} ${COMMAND} failed."
+}
+
+#------------------------------------------------------------------------------------
+# Run a command in the container.
+
+function dockerexec {
+   docker exec "${COMMANDOPTS[@]}" ${SERVICENAME} "$@"
+   [ $? -eq 0 ] || die "${SERVICENAME} ${COMMAND} failed."
+}
+
+#------------------------------------------------------------------------------------
+# Run a detached command in the container. 
+
+# detached, can't remove.
+function serviceStart {
+   docker run -d "-p" "1337:1337" "--restart=always" \
+		--name="${SERVICENAME}" -h "${HOSTNAME}" "${IMAGENAME}"
+   [ $? -eq 0 ] || die "${SERVICENAME} start failed."
+}
+
+#------------------------------------------------------------------------------------
+# Stop the container. 
+
+function serviceStop {
+   ! container_running "${SERVICENAME}" || docker stop --time=30 "${SERVICENAME}" >/dev/null 2>&1
+}
+
+#------------------------------------------------------------------------------------
+# Delete the container. 
+
+function serviceDelete {
+   ! container_exists "${SERVICENAME}"  || docker rm "${SERVICENAME}" >/dev/null 2>&1
 }
 
 #------------------------------------------------------------------------------------
