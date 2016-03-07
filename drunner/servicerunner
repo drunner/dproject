@@ -36,8 +36,8 @@ SYNOPSIS
    ${CODE_S}${SERVICENAME} help${CODE_E}
       This help.
    
-   ${CODE_S}${SERVICENAME} create PROJECT_NAME PROJECT_PATH${CODE_E}
-      Creates a template dService project in PROJECT_PATH.
+   ${CODE_S}${SERVICENAME} create PROJECT_NAME [PROJECT_PATH]${CODE_E}
+      Creates a template dService project in PROJECT_PATH. If no path is supplied, the project will be created in PROJECT_NAME.
    
    ${CODE_S}${SERVICENAME} setup${CODE_E}
       Run the configuration wizard.
@@ -133,8 +133,13 @@ function main {
          #--- custom commands
             
          create)
+            [ ! -z "${2:-}" ] || die "Usage: ${SERVICENAME} create PROJECT_NAME [PROJECT_PATH]"
             local PROJECT_NAME=$2
-            local PROJECT_PATH=$(realpath $3)
+            if [ -z "${3:-}" ]; then
+               local PROJECT_PATH=$(realpath $2)
+            else
+               local PROJECT_PATH=$(realpath $3)
+            fi
             
             # Create project directory
             mkdir -p ${PROJECT_PATH}
@@ -150,6 +155,16 @@ function main {
             
             # Set permissions on new files
             chownpath "${PROJECT_PATH}" "chown -R $EUID:${GROUPS[0]} /s && chmod -R 0644 /s"
+            
+            echo "${CODE_S}Project \"${PROJECT_NAME}\" has been created in \"${PROJECT_PATH}\"!${CODE_E}"
+            echo "${CODE_S}Create a Git repository and branch to start development:${CODE_E}"
+            echo "${CODE_S}   cd ${PROJECT_PATH}${CODE_E}"
+            echo "${CODE_S}   git init${CODE_E}"
+            echo "${CODE_S}   git add .${CODE_E}"
+            echo "${CODE_S}   git commit -m \"Project created\"${CODE_E}"
+            echo "${CODE_S}   git checkout -b dev${CODE_E}"
+            echo ""
+            echo "${CODE_S}You now have a Git repository on a dev branch to begin developing!${CODE_E}"
 
            ;;
          
