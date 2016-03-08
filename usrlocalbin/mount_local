@@ -3,4 +3,4 @@
 
 source /config/vars.sh
 echo "mkdir -p ~/dev"
-echo "sudo mount -t cifs //${ip_address}/${share_path} ~/dev -o username=${domainUserName},uid=1000,gid=1000,file_mode=0644,dir_mode=0755"
+echo "sudo mount -t cifs \"//${ip_address}/${share_path}\" ~/dev -o username=${domainUserName},uid=1000,gid=1000,file_mode=0644,dir_mode=0755"
