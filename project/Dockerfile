@@ -1,4 +1,3 @@
-# Docker file to run Hashicorp Vault (vaultproject.io)
 FROM drunner/baseimage-alpine
 MAINTAINER drunner
 
