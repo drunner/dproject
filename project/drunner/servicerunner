@@ -29,7 +29,7 @@ if [ "${DRUNNER_ENVIRONMENT:-}" == "live" ]; then
    container_running "logstash" || die "No Logstash container running, please start logstash to enable logging"
    LOGGINGOPTS=("--log-driver=gelf" "--log-opt" "gelf-address=udp://127.0.0.1:12201")
 else
-   LOGGINGOPTS=("--log-driver=json")
+   LOGGINGOPTS=("--log-driver=json-file")
 fi
 
 #------------------------------------------------------------------------------------
