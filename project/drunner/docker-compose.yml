@@ -1,0 +1,21 @@
+version: '2'
+# we can use docker-compose style services: (see https://docs.docker.com/compose/compose-file/ for docs)
+#
+services:
+   <<PROJECT_NAME>>:
+      image: drunner/<<PROJECT_NAME>>
+      volumes:
+         - "config:/config"
+      restart: always
+      network_mode: bridge
+
+# we manage services manually in servicerunner, so there's no services
+# section.
+
+# if we don't want to use dRunner's environment variables for our
+# configuraiton we should reinstate the config volume with this.
+#
+volumes:
+  config:
+     external:
+        name: "drunner-${SERVICENAME}-config"
