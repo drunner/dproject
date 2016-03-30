@@ -1,6 +1,7 @@
 # Docker file to run Hashicorp Vault (vaultproject.io)
 FROM drunner/baseimage-alpine
 MAINTAINER drunner
+USER root
 
 # add in the assets.
 COPY ["./drunner","/drunner"]
