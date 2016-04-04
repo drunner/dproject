@@ -2,8 +2,8 @@ version: '2'
 # we can use docker-compose style services: (see https://docs.docker.com/compose/compose-file/ for docs)
 #
 services:
-   <<PROJECT_NAME>>:
-      logging:
-         driver: gelf
-         options:
-            gelf-address: "udp://127.0.0.1:12201"
+  <<PROJECT_NAME>>:
+    logging:
+      driver: gelf
+      options:
+        gelf-address: "udp://127.0.0.1:12201"
