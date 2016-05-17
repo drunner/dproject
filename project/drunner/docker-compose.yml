@@ -5,7 +5,7 @@ services:
   <<PROJECT_NAME>>:
     image: drunner/<<PROJECT_NAME>>
     volumes:
-      - "config:/config"
+      - "drunner-config:/config"
     restart: always
     network_mode: bridge
 
@@ -16,6 +16,6 @@ services:
 # configuraiton we should reinstate the config volume with this.
 #
 volumes:
-  config:
+  drunner-config:
     external:
       name: "drunner-${SERVICENAME}-config"
