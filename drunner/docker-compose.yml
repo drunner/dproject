@@ -2,10 +2,16 @@ version: '2'
 
 # we manage services manually in servicerunner, so there's no services
 # section.
+services:
+  dproject:
+    image: drunner/dproject
+    volumes:
+      - "drunner-config:/config"
+    network_mode: bridge
 
 # if we don't want to use dRunner's environment variables for our
 # configuraiton we should reinstate the config volume with this.
 volumes:
-  config:
+  drunner-config:
      external:
         name: "drunner-${SERVICENAME}-config"

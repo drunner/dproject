@@ -24,6 +24,7 @@ MYDIR=$( dirname "$(readlink -f "$0")" )
 source "$MYDIR/utils.sh"
 
 # we want to be in the same directory as docker-compose.yml for docker-compose to work nicely.
+WORKDIR="$(pwd)"
 cd $MYDIR
 
 # Determine dRunner environment for logging options
@@ -144,7 +145,7 @@ function main {
          update_start)
             ;;
 
-         updat_eend)
+         update_end)
             ;;
          
          selftest)
