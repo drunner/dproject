@@ -23,7 +23,7 @@ function chownpath(path, command)
 end
 
 function dockerrun(terminal, command) 
-   return drun_output("docker", "run", terminal, "--rm", "--name=dproject-"..command, "-v", "drunner-${SERVICENAME}-config:/config", "drunner/dproject", command)
+   return drun_output("docker", "run", terminal, "--rm", "--name=\"dproject_"..command.."\"", "-v", "drunner-${SERVICENAME}-config:/config", "drunner/dproject", command)
 end
 
 function create(...)
