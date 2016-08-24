@@ -33,6 +33,7 @@ function splitString(input)
       elseif buf then
          buf = buf .. ' ' .. str
       end
+      if not buf then
          result[index] = (str:gsub(spat,""):gsub(epat,""))
          index = index + 1
       end
