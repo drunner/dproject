@@ -42,12 +42,16 @@ function splitString(input)
    return result
 end
 
-function dockerrun(command, arguments)
-   return drun("docker", "run", "-i", "--rm", "--name=dproject-"..command, "-v", "drunner-${SERVICENAME}-config:/config", "${IMAGENAME}", command, arguments)
+function dockerrun(command)
+   return drun("docker", "run", "-i", "--rm", "--name=dproject-"..command, "-v", "drunner-${SERVICENAME}-config:/config", "${IMAGENAME}", command)
 end
 
-function dockerrun_output(command, arguments)
-   return drun_output("docker", "run", "-i", "--rm", "--name=dproject-"..command, "-v", "drunner-${SERVICENAME}-config:/config", "${IMAGENAME}", command, arguments)
+function dockerrun_output(command)
+   return drun_output("docker", "run", "-i", "--rm", "--name=dproject-"..command, "-v", "drunner-${SERVICENAME}-config:/config", "${IMAGENAME}", command)
+end
+
+function dockerrun_outputandarg(command, argument)
+   return drun_output("docker", "run", "-i", "--rm", "--name=dproject-"..command, "-v", "drunner-${SERVICENAME}-config:/config", "${IMAGENAME}", command, argument)
 end
 
 function create(...)
@@ -117,7 +121,7 @@ function setup()
 end
 
 function mount()
-   local mountCommands = dockerrun_output("mount_local", os.getenv("HOME"))
+   local mountCommands = dockerrun_outputandarg("mount_local", os.getenv("HOME"))
    for line in string.gmatch(mountCommands, "[^\n]+") do
       drun(table.unpack(splitString(line)))
    end
