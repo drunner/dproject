@@ -88,7 +88,7 @@ function setup()
 
    dockerrun("mount_setup")
 
-   local gitCommands = dockerrun("setup_git")
+   local gitCommands = dockerrun_output("setup_git")
    for line in string.gmatch(gitCommands, "[^\n]+") do
       drun(dsplit(line))
    end
