@@ -18,30 +18,6 @@ function chownpath(path, command)
    end
 end
 
-function splitString(input)
-   local result = {}
-   local index = 1
-   local spat, epat, buf, quoted = [=[^(['"])]=], [=[(['"])$]=]
-   for str in input:gmatch("%S+") do
-      local squoted = str:match(spat)
-      local equoted = str:match(epat)
-      local escaped = str:match([=[(\*)['"]$]=])
-      if squoted and not quoted and not equoted then
-         buf, quoted = str, squoted
-      elseif buf and equoted == quoted and #escaped % 2 == 0 then
-         str, buf, quoted = buf .. ' ' .. str, nil, nil
-      elseif buf then
-         buf = buf .. ' ' .. str
-      end
-      if not buf then
-         result[index] = (str:gsub(spat,""):gsub(epat,""))
-         index = index + 1
-      end
-   end
-   ---if buf then print("Missing matching quote for "..buf) end
-   return result
-end
-
 function dockerrun(command)
    return drun("docker", "run", "-i", "--rm", "--name=dproject-"..command, "-v", "drunner-${SERVICENAME}-config:/config", "${IMAGENAME}", command)
 end
@@ -55,10 +31,11 @@ function dockerrun_outputandarg(command, argument)
 end
 
 function create(...)
-   local projectName = arg[0]
+   local args = table.pack(...)
+   local projectName = args[0]
    local projectPath = projectName
-   if arg[n] > 1 then
-      projectPath = arg[1]
+   if args[n] > 1 then
+      projectPath = args[1]
    end
 
    -- Create project directory
@@ -113,7 +90,7 @@ function setup()
 
    local gitCommands = dockerrun("setup_git")
    for line in string.gmatch(gitCommands, "[^\n]+") do
-      drun(table.unpack(splitString(line)))
+      drun(dsplit(line))
    end
 
    print("")
@@ -123,7 +100,7 @@ end
 function mount()
    local mountCommands = dockerrun_outputandarg("mount_local", os.getenv("HOME"))
    for line in string.gmatch(mountCommands, "[^\n]+") do
-      drun(table.unpack(splitString(line)))
+      drun(dsplit(line))
    end
 end
 
