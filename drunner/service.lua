@@ -32,10 +32,10 @@ end
 
 function create(...)
    local args = table.pack(...)
-   local projectName = args[0]
+   local projectName = args[1]
    local projectPath = projectName
-   if args[n] > 1 then
-      projectPath = args[1]
+   if args.n > 1 then
+      projectPath = args[2]
    end
 
    -- Create project directory
