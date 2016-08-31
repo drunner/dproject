@@ -2,5 +2,5 @@
 [ -e "/config/vars.sh" ] || die "Please run \"setup configure\" first"
 
 source /config/vars.sh
-echo "mkdir -p ~/dev"
-echo "sudo mount -t cifs \"//${ip_address}/${share_path}\" ~/dev -o username=${domainUserName},uid=1000,gid=1000,file_mode=0644,dir_mode=0755"
+echo "mkdir -p $1/dev"
+echo "sudo mount -t cifs \"//${ip_address}/${share_path}\" $1/dev -o username=${domainUserName},uid=1000,gid=1000,file_mode=0644,dir_mode=0755"
