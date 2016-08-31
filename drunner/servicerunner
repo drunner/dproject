@@ -156,7 +156,7 @@ function main {
             ;;
          
          mount)
-            bash -c "$(dockerrun mount_local)"
+            bash -c "$(dockerrun mount_local ~)"
             ;;
             
          #--- unrecognised commands
